@@ -1,0 +1,60 @@
+form * {
+    display: block;
+}
+
+form p, form li {
+    font-size: smaller;
+}
+
+label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+input[type="email"], input[type="text"], input[type="password"], select {
+    background: transparent;
+    outline: none;
+    padding: 1em;
+    font-family: "Fira Code", monospace;
+    color: white;
+
+    border: none;
+    border-bottom: 1px solid #fffe;
+    margin: 0 0 2em 0;
+
+    width: 100%;
+}
+
+#submit-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+input[type="submit"] {
+    background-color: #0397b1ee;
+    font-family: "Fira Code", monospace;
+    color: #fffe;
+    padding: 1em;
+    border-radius: 0.75em;
+    text-align: center;
+    border: none;
+}
+
+input[type="submit"]:disabled {
+    opacity: 0.5;
+}
+
+#captcha-div {
+    display: flex;
+    flex-direction: row;
+}
+
+canvas {
+    display: inline-block;
+    height: 2em;
+    width: 10em;
+}
+
+select {
+    background-color: #111;
+}
