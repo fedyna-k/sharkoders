@@ -1,17 +1,6 @@
 <?php
 
 session_start();
-// Preload member names in order to avoir multiple database calls
-
-if (!isset($_SESSION["members"])) {
-    include("backend/config.php");
-    $db = new PDO("mysql:host=" . $server . ";dbname=" . $database . ";charset=UTF8", $user, $pass);
-    
-    $req = $db->prepare("SELECT FirstName, LastName FROM USERS");
-    $req->execute();
-
-    $_SESSION["members"] = $req->fetchAll();
-}
 
 ?>
 
@@ -73,10 +62,27 @@ if (!isset($_SESSION["members"])) {
             <p>
                 <?php
                 
-                for ($i = 0 ; $i < count($_SESSION["members"]) ; $i++) { 
-                    echo $_SESSION["members"][$i]["FirstName"] . " " . $_SESSION["members"][$i]["LastName"];
+                include("backend/config.php");
+                $db = new PDO("mysql:host=" . $server . ";dbname=" . $database . ";charset=UTF8", $user, $pass);
+                
+                $req = $db->prepare("SELECT FirstName, LastName, ColorBadge FROM USERS NATURAL JOIN BADGES");
+                $req->execute();
+                $members = $req->fetchAll();
 
-                    if ($i != count($_SESSION["members"]) - 1) {
+                for ($i = 0 ; $i < count($members) ; $i++) {
+
+                    if ($members[$i]["ColorBadge"] != null) {
+                        echo "<span style='color: " .
+                            $members[$i]["ColorBadge"] .
+                            " ; text-shadow: 0 0 0.5em " .
+                            $members[$i]["ColorBadge"] . "'>" .
+                            $members[$i]["FirstName"] . " " .
+                            $members[$i]["LastName"] . "</span>";
+                    } else {
+                        echo $members[$i]["FirstName"] . " " . $members[$i]["LastName"];
+                    }
+
+                    if ($i != count($members) - 1) {
                         echo ", ";
                     }
                 }
